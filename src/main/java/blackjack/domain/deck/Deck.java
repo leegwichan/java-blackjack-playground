@@ -36,4 +36,24 @@ public class Deck {
             throw new IllegalArgumentException("초기 덱은 중복 카드가 없어야 합니다");
         }
     }
+
+    public Card draw() {
+        if (cards.isEmpty()) {
+            throw new IllegalStateException("더 이상 뽑을 카드가 없습니다");
+        }
+
+        return cards.remove();
+    }
+
+    public List<Card> draw(int count) {
+        if (count <= 0) {
+            throw new IllegalArgumentException("카드는 한 장 이상 뽑아야 합니다");
+        }
+
+        List<Card> drawnCards = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            drawnCards.add(draw());
+        }
+        return drawnCards;
+    }
 }
