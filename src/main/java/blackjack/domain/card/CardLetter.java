@@ -23,11 +23,11 @@ public enum CardLetter {
         this.number = number;
     }
 
-    public boolean isAce() {
+    boolean isAce() {
         return this == ACE;
     }
 
-    public int getNumber() {
+    int getNumber() {
         return number;
     }
 }
