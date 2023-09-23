@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-class HandCardsTest {
+class ParticipantCardsTest {
 
     @Nested
     @DisplayName("객체 생성 테스트")
     class CreationTest {
 
         @Test
-        @DisplayName("HandCards 생성 시 초기에 한 장 이상의 카드가 있어야 한다")
+        @DisplayName("객체 생성 시 초기에 한 장 이상의 카드가 있어야 한다")
         void creationTest_whenCardsSizeIsZero_throwException() {
             List<Card> cards = new ArrayList<>();
 
@@ -24,7 +24,7 @@ class HandCardsTest {
         }
 
         void assertThatThrownByMakingHandCards(List<Card> cards) {
-            assertThatThrownBy(() -> new HandCards(cards))
+            assertThatThrownBy(() -> new ParticipantCards(cards))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("최소 한 장의 카드는 가지고 있어야 합니다");
         }
