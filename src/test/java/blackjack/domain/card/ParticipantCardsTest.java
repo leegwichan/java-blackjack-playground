@@ -1,5 +1,6 @@
 package blackjack.domain.card;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.DisplayName;
@@ -27,6 +28,50 @@ class ParticipantCardsTest {
             assertThatThrownBy(() -> new ParticipantCards(cards))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessage("최소 한 장의 카드는 가지고 있어야 합니다");
+        }
+    }
+
+    @Nested
+    @DisplayName("카드의 숫자 합계를 계산할 수 있다")
+    class PointTest {
+
+        @Test
+        @DisplayName("ACE가 없을 경우, 각 카드 숫자 합계를 반환한다")
+        void calculatePointTest_whenAceNotExist() {
+            List<Card> cards = List.of(new Card(CardShape.CLOVER, CardLetter.FIVE),
+                    new Card(CardShape.DIAMOND, CardLetter.TEN), new Card(CardShape.HEART, CardLetter.EIGHT));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+            int expected = 5 + 10 + 8;
+
+            int actual = participantCards.calculatePoint();
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("ACE가 있으며 합계가 11을 초과하지 않는 경우, ACE는 11로 사용될 수 있다")
+        void calculatePointTest_whenAceExistAndUnder11() {
+            List<Card> cards = List.of(new Card(CardShape.CLOVER, CardLetter.FIVE),
+                    new Card(CardShape.DIAMOND, CardLetter.TEN), new Card(CardShape.HEART, CardLetter.ACE));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+            int expected = 5 + 10 + 1;
+
+            int actual = participantCards.calculatePoint();
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("ACE가 있으며 합계가 11을 초과하는 경우, ACE는 1로 사용한다")
+        void calculatePointTest_whenAceExistAndOver11() {
+            List<Card> cards = List.of(new Card(CardShape.CLOVER, CardLetter.FIVE),
+                    new Card(CardShape.HEART, CardLetter.ACE));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+            int expected = 5 + 11;
+
+            int actual = participantCards.calculatePoint();
+
+            assertThat(actual).isEqualTo(expected);
         }
     }
 }
