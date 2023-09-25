@@ -74,4 +74,45 @@ class ParticipantCardsTest {
             assertThat(actual).isEqualTo(expected);
         }
     }
+
+    @Nested
+    @DisplayName("해당 카드 합계가 버스트 되었는지 알 수 있다")
+    class BustTest {
+
+        @Test
+        @DisplayName("점수가 21을 초과하면 버스트 된다")
+        void isBustTest_whenPointOver21_returnTrue() {
+            List<Card> cards = List.of(new Card(CardShape.CLOVER, CardLetter.TEN),
+                    new Card(CardShape.HEART, CardLetter.FIVE), new Card(CardShape.HEART, CardLetter.SEVEN));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+
+            boolean actual = participantCards.isBust();
+
+            assertThat(actual).isTrue();
+        }
+
+        @Test
+        @DisplayName("점수가 21이면 버스트가 아니다")
+        void isBustTest_whenPointIs21_returnFalse() {
+            List<Card> cards = List.of(new Card(CardShape.CLOVER, CardLetter.TEN),
+                    new Card(CardShape.HEART, CardLetter.FIVE), new Card(CardShape.HEART, CardLetter.SIX));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+
+            boolean actual = participantCards.isBust();
+
+            assertThat(actual).isFalse();
+        }
+
+        @Test
+        @DisplayName("점수가 21 미만이면 버스트가 아니다")
+        void isBustTest_whenPointUnder21_returnFalse() {
+            List<Card> cards = List.of(new Card(CardShape.CLOVER, CardLetter.TEN),
+                    new Card(CardShape.HEART, CardLetter.TEN));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+
+            boolean actual = participantCards.isBust();
+
+            assertThat(actual).isFalse();
+        }
+    }
 }

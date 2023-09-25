@@ -34,4 +34,8 @@ public class ParticipantCards {
     private boolean isAceExist() {
         return cards.stream().anyMatch(Card::isAce);
     }
+
+    public boolean isBust() {
+        return calculatePoint() > UPPER_LIMIT_POINT;
+    }
 }
