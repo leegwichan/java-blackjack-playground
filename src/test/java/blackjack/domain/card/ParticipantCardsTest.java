@@ -73,6 +73,32 @@ class ParticipantCardsTest {
 
             assertThat(actual).isEqualTo(expected);
         }
+
+        @Test
+        @DisplayName("ACE 가 2장인 경우, 점수에 따라 하나는 1, 하나는 11로 사용될 수 있다")
+        void calculatePointTest_whenDoubleAceExist_AndPointIsLow() {
+            List<Card> cards = List.of(new Card(CardShape.CLOVER, CardLetter.FIVE),
+                    new Card(CardShape.HEART, CardLetter.ACE), new Card(CardShape.DIAMOND, CardLetter.ACE));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+            int expected = 5 + 11 + 1;
+
+            int actual = participantCards.calculatePoint();
+
+            assertThat(actual).isEqualTo(expected);
+        }
+
+        @Test
+        @DisplayName("ACE 가 2장인 경우, 두장 다 1로 사용될 수 있다")
+        void calculatePointTest_whenDoubleAceExist_AndPointIsHigh() {
+            List<Card> cards = List.of(new Card(CardShape.CLOVER, CardLetter.TEN),
+                    new Card(CardShape.HEART, CardLetter.ACE), new Card(CardShape.DIAMOND, CardLetter.ACE));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+            int expected = 10 + 1 + 1;
+
+            int actual = participantCards.calculatePoint();
+
+            assertThat(actual).isEqualTo(expected);
+        }
     }
 
     @Nested
