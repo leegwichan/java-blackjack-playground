@@ -46,8 +46,9 @@ class DealerTest {
     void addTest_whenPointOver16_throwException() {
         ParticipantCards cards = new MockParticipantCards(17);
         Dealer dealer = new Dealer(cards);
+        Card newCard = new Card(CardShape.HEART, CardLetter.ACE);
 
-        assertThatThrownBy(() -> dealer.add(new Card(CardShape.HEART, CardLetter.ACE)))
+        assertThatThrownBy(() -> dealer.add(newCard))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("딜러는 포인트가 16 초과 시 카드를 추가할 수 없습니다");
     }
