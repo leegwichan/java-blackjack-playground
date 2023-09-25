@@ -2,6 +2,7 @@ package blackjack.domain.card;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ParticipantCards {
 
@@ -37,5 +38,11 @@ public class ParticipantCards {
 
     public boolean isBust() {
         return calculatePoint() > UPPER_LIMIT_POINT;
+    }
+
+    public void add(Card card) {
+        Objects.requireNonNull(card);
+
+        cards.add(card);
     }
 }

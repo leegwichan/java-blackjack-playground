@@ -141,4 +141,34 @@ class ParticipantCardsTest {
             assertThat(actual).isFalse();
         }
     }
+
+    @Nested
+    @DisplayName("카드를 추가할 수 있다")
+    class AddingCardTest {
+
+        @Test
+        @DisplayName("null을 인자로 받을 수 없다")
+        void addTest_whenCardIsNull_throwException() {
+            List<Card> cards = List.of(new Card(CardShape.DIAMOND, CardLetter.EIGHT));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+
+            assertThatThrownBy(() -> participantCards.add(null))
+                    .isInstanceOf(NullPointerException.class);
+        }
+
+        @Test
+        @DisplayName("카드를 한 장 추가할 수 있다")
+        // calculatePoint()가 정상 작동함을 가정함
+        void addTest() {
+            List<Card> cards = List.of(new Card(CardShape.DIAMOND, CardLetter.EIGHT));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+            Card newCard = new Card(CardShape.HEART, CardLetter.FIVE);
+            int expectedPoint = 8 + 5;
+
+            participantCards.add(newCard);
+            int actualPoint = participantCards.calculatePoint();
+
+            assertThat(actualPoint).isEqualTo(expectedPoint);
+        }
+    }
 }
