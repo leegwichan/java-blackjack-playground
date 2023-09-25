@@ -157,6 +157,20 @@ class ParticipantCardsTest {
         }
 
         @Test
+        @DisplayName("버스트 상태에서는 카드를 추가할 수 없습니다")
+        void addTest_whenBust_throwException() {
+            List<Card> cards = List.of(new Card(CardShape.DIAMOND, CardLetter.EIGHT),
+                    new Card(CardShape.DIAMOND, CardLetter.TEN), new Card(CardShape.CLOVER, CardLetter.TEN));
+            ParticipantCards participantCards = new ParticipantCards(cards);
+            assertThat(participantCards.isBust()).isTrue();
+            Card newCard = new Card(CardShape.HEART, CardLetter.FIVE);
+
+            assertThatThrownBy(() -> participantCards.add(newCard))
+                    .isInstanceOf(IllegalStateException.class)
+                    .hasMessage("버스트 상태에서는 카드를 추가할 수 없습니다");
+        }
+
+        @Test
         @DisplayName("카드를 한 장 추가할 수 있다")
         // calculatePoint()가 정상 작동함을 가정함
         void addTest() {
