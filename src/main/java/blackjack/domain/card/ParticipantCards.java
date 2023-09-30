@@ -52,4 +52,8 @@ public class ParticipantCards {
             throw new IllegalStateException("버스트 상태에서는 카드를 추가할 수 없습니다");
         }
     }
+
+    public List<Card> getCards() {
+        return List.copyOf(cards);
+    }
 }

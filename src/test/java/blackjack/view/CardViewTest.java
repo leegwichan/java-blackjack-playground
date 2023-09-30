@@ -4,8 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import blackjack.domain.card.CardLetter;
 import blackjack.domain.card.CardShape;
-import blackjack.dto.CardDto;
-import blackjack.dto.CardsDto;
+import blackjack.dto.card.CardDto;
+import blackjack.dto.card.CardsDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -2,8 +2,8 @@ package blackjack.view;
 
 import blackjack.domain.card.CardLetter;
 import blackjack.domain.card.CardShape;
-import blackjack.dto.CardDto;
-import blackjack.dto.CardsDto;
+import blackjack.dto.card.CardDto;
+import blackjack.dto.card.CardsDto;
 import java.util.Map;
 import java.util.stream.Collectors;
 

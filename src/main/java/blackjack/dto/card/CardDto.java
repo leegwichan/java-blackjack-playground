@@ -1,8 +1,9 @@
-package blackjack.dto;
+package blackjack.dto.card;
 
 import blackjack.domain.card.Card;
 import blackjack.domain.card.CardLetter;
 import blackjack.domain.card.CardShape;
+import java.util.Objects;
 
 public class CardDto {
 
@@ -10,8 +11,8 @@ public class CardDto {
     private final CardLetter letter;
 
     private CardDto(CardShape shape, CardLetter letter) {
-        this.shape = shape;
-        this.letter = letter;
+        this.shape = Objects.requireNonNull(shape);
+        this.letter = Objects.requireNonNull(letter);
     }
 
     public static CardDto of(Card card) {
