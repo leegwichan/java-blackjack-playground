@@ -37,13 +37,47 @@ public class InputView {
                 .collect(toList());
     }
 
+    public int inputBettingAmount(String name) {
+        validateName(name);
+        printer.print(String.format("%n%s의 배팅 금액은?%n", name));
+
+        try {
+            return tryInputPositiveInteger();
+        } catch (IllegalArgumentException exception) {
+            throw new IllegalArgumentException("양수를 입력해야 합니다");
+        }
+    }
+
+    private int tryInputPositiveInteger() {
+        int bettingAmount = Integer.parseInt(reader.read());
+
+        validatePositiveInteger(bettingAmount);
+        return bettingAmount;
+    }
+
     public boolean isAddingCard(String playerName) {
         printer.print(String.format(CARD_ADDING_REQUEST_FORMAT, playerName));
         String message = reader.read();
 
+        validateBooleanMessage(message);
+        return MESSAGE_TO_BOOLEAN.get(message);
+    }
+
+    private void validateBooleanMessage(String message) {
         if (!MESSAGE_TO_BOOLEAN.containsKey(message)) {
             throw new IllegalArgumentException("허용된 문자만 입력할 수 있습니다");
         }
-        return MESSAGE_TO_BOOLEAN.get(message);
+    }
+
+    private void validateName(String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("이름은 빈칸이 아니어야 합니다");
+        }
+    }
+
+    private void validatePositiveInteger(int number) {
+        if (number <= 0) {
+            throw new IllegalArgumentException();
+        }
     }
 }
