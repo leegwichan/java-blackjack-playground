@@ -27,8 +27,10 @@ public class InputView {
 
     public List<String> inputPlayerNames() {
         printer.print(PLAYER_NAMES_REQUEST);
-        String names = reader.read();
-        return divideNames(names);
+
+        List<String> names = divideNames(reader.read());
+        names.forEach(this::validateName);
+        return names;
     }
 
     private List<String> divideNames(String names) {

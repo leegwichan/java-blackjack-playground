@@ -21,16 +21,30 @@ class InputViewTest {
     @DisplayName("플레이어 이름 입력 테스트")
     class PlayerNamesTest {
 
+        private static final String DEFAULT_NAMES = "steve,pobi";
+
         @Test
         @DisplayName("플레이어 이름 입력 요청 메세지가 출력된다")
         void inputPlayerNamesTest_assertThatRequestMessagePrinted() {
             MockPrinter printer = new MockPrinter();
-            InputView inputView = new InputView(new MockReader(), printer);
+            InputView inputView = new InputView(new MockReader(DEFAULT_NAMES), printer);
             String expectedPrintedMessage = "게임에 참여할 사람의 이름을 입력하세요.(쉼표 기준으로 분리)";
 
             inputView.inputPlayerNames();
 
             assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
+        }
+
+
+        @ParameterizedTest(name = "입력 메세지 : {0}")
+        @CsvSource(value = {"''", "' '", "steve,,jason", " ,steve"}, delimiter = '_')
+        @DisplayName("플레이어의 이름은 빈칸이 아니어야 한다")
+        void inputPlayerNamesTest_whenNameIsBlank_throwException(String message) {
+            InputView inputView = new InputView(new MockReader(message), new MockPrinter());
+
+            assertThatThrownBy(() -> inputView.inputPlayerNames())
+                    .isInstanceOf(IllegalArgumentException.class)
+                    .hasMessage("이름은 빈칸이 아니어야 합니다");
         }
 
         @Test
