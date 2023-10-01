@@ -22,4 +22,8 @@ abstract class Participant {
     public final int getPoint() {
         return cards.calculatePoint();
     }
+
+    public final ParticipantCards getCards() {
+        return cards;
+    }
 }
