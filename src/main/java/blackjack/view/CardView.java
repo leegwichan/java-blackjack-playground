@@ -27,6 +27,10 @@ class CardView {
                 .collect(Collectors.joining(CARD_DELIMITER));
     }
 
+    String toFirstCardView(CardsDto dto) {
+        return toCardView(dto.getCardDtos().get(0));
+    }
+
     private String toCardView(CardDto dto) {
         String letterView = LETTER_TO_VIEW.get(dto.getLetter());
         String shapeView = SHAPE_TO_VIEW.get(dto.getShape());

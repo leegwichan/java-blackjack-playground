@@ -54,5 +54,19 @@ class CardViewTest {
 
         assertThat(actual).isEqualTo(expected);
     }
+
+    @Test
+    @DisplayName("맨 앞장의 카드만 출력할 수 있다")
+    void toFirstCardViewTest() {
+        CardDto card1 = CardDto.of(CardShape.SPADE, CardLetter.KING);
+        CardDto card2 = CardDto.of(CardShape.HEART, CardLetter.SIX);
+        CardsDto cards = CardsDto.of(List.of(card1, card2));
+        CardView cardView = new CardView();
+        String expected = "K스페이드";
+
+        String actual = cardView.toFirstCardView(cards);
+
+        assertThat(actual).isEqualTo(expected);
+    }
 }
 
