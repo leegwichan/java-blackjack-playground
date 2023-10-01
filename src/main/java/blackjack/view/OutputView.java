@@ -28,7 +28,15 @@ public class OutputView {
     public void printInitialParticipantsCards(StatusDto status) {
         printInitialState(status.getPlayers());
         printDealerFirstCard(status.getDealer());
-        status.getPlayers().forEach(this::printPlayerCard);
+        status.getPlayers().forEach(this::printPlayerCards);
+    }
+
+    public void printFinalResult() {
+
+    }
+
+    public void printFinalProfit() {
+
     }
 
     private void printInitialState(List<PlayerDto> playerDtos) {
@@ -41,7 +49,7 @@ public class OutputView {
         printer.print(String.format(DEALER_CARD_FORMAT, cardText));
     }
 
-    private void printPlayerCard(PlayerDto player) {
+    public void printPlayerCards(PlayerDto player) {
         String cardText = cardView.toCardsView(player.getCards());
         printer.print(String.format(PLAYER_CARD_FORMAT, player.getName(), cardText));
     }

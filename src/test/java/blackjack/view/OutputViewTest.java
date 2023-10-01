@@ -50,6 +50,16 @@ class OutputViewTest {
         assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
     }
 
+    @Test
+    @DisplayName("초기 딜러와 플레이어들의 카드 상황을 출력할 수 있다")
+    void printPlayerCardsTest() {
+        String expectedPrintedMessage = "pobi 카드: " + MockCardView.createMockView(2) + NEW_LINE;
+
+        outputView.printPlayerCards(POBI_DTO);
+
+        assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
+    }
+
     @BeforeEach
     void initializeTestObject() {
         printer = new MockPrinter();
