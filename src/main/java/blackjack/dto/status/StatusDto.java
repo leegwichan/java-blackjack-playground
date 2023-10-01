@@ -25,6 +25,10 @@ public class StatusDto {
         return new StatusDto(DealerDto.from(dealer), playerDtos);
     }
 
+    public static StatusDto of(DealerDto dealerDto, List<PlayerDto> playerDtos) {
+        return new StatusDto(dealerDto, playerDtos);
+    }
+
     public DealerDto getDealer() {
         return dealer;
     }

@@ -18,6 +18,10 @@ public class DealerDto {
         return new DealerDto(dealer.getPoint(), CardsDto.of(dealer.getCards()));
     }
 
+    public static DealerDto of(int point, CardsDto cards) {
+        return new DealerDto(point, cards);
+    }
+
     public int getPoint() {
         return point;
     }

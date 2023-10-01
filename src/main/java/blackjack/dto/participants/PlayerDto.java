@@ -23,12 +23,20 @@ public class PlayerDto {
                 player.getPoint(), CardsDto.of(player.getCards()));
     }
 
+    public static PlayerDto of(String name, int betAmount, int point, CardsDto cards) {
+        return new PlayerDto(name, betAmount, point, cards);
+    }
+
     public String getName() {
         return name;
     }
 
     public int getBetAmount() {
         return betAmount;
+    }
+
+    public int getPoint() {
+        return point;
     }
 
     public CardsDto getCards() {
