@@ -14,6 +14,8 @@ public class OutputView {
     private static final String INITIAL_STATE_FORMAT = "%n딜러와 %s에게 2장의 카드를 나누었습니다.%n";
     private static final String DEALER_CARD_FORMAT = "딜러 카드: %s%n";
     private static final String PLAYER_CARD_FORMAT = "%s 카드: %s%n";
+    private static final String DEALER_CARD_WITH_POINT_FORMAT = "%n딜러 카드: %s - 결과 : %d%n";
+    private static final String PLAYER_CARD_WITH_POINT_FORMAT = "%s 카드: %s - 결과 : %d%n";
 
     private static final String PLAYER_NAME_DELIMITER = ", ";
 
@@ -31,8 +33,9 @@ public class OutputView {
         status.getPlayers().forEach(this::printPlayerCards);
     }
 
-    public void printFinalResult() {
-
+    public void printFinalResult(StatusDto status) {
+        printDealerCardsWithPoint(status.getDealer());
+        status.getPlayers().forEach(this::printPlayerCardsWithPoint);
     }
 
     public void printFinalProfit() {
@@ -49,9 +52,19 @@ public class OutputView {
         printer.print(String.format(DEALER_CARD_FORMAT, cardText));
     }
 
+    private void printDealerCardsWithPoint(DealerDto dealer) {
+        String cardText = cardView.toCardsView(dealer.getCards());
+        printer.print(String.format(DEALER_CARD_WITH_POINT_FORMAT, cardText, dealer.getPoint()));
+    }
+
     public void printPlayerCards(PlayerDto player) {
         String cardText = cardView.toCardsView(player.getCards());
         printer.print(String.format(PLAYER_CARD_FORMAT, player.getName(), cardText));
+    }
+
+    private void printPlayerCardsWithPoint(PlayerDto player) {
+        String cardText = cardView.toCardsView(player.getCards());
+        printer.print(String.format(PLAYER_CARD_WITH_POINT_FORMAT, player.getName(), cardText, player.getPoint()));
     }
 
     private String getPlayerNames(List<PlayerDto> playerDtos) {

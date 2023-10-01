@@ -51,11 +51,25 @@ class OutputViewTest {
     }
 
     @Test
-    @DisplayName("초기 딜러와 플레이어들의 카드 상황을 출력할 수 있다")
+    @DisplayName("각 플레이어의 카드 상황을 출력할 수 있다")
     void printPlayerCardsTest() {
         String expectedPrintedMessage = "pobi 카드: " + MockCardView.createMockView(2) + NEW_LINE;
 
         outputView.printPlayerCards(POBI_DTO);
+
+        assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
+    }
+
+    @Test
+    @DisplayName("초기 딜러와 플레이어들의 카드 상황과 점수를 출력할 수 있다")
+    void printFinalResultTest() {
+        StatusDto statusDto = StatusDto.of(DEALER_DTO, List.of(POBI_DTO, JASON_DTO));
+        String expectedPrintedMessage = NEW_LINE
+                + "딜러 카드: " + MockCardView.createMockView(2) + " - 결과 : 19" + NEW_LINE
+                + "pobi 카드: " + MockCardView.createMockView(2) + " - 결과 : 15" + NEW_LINE
+                + "jason 카드: " + MockCardView.createMockView(2) + " - 결과 : 20" + NEW_LINE;
+
+        outputView.printFinalResult(statusDto);
 
         assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
     }
