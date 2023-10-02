@@ -2,7 +2,7 @@ package blackjack.view;
 
 import static java.util.stream.Collectors.joining;
 
-import blackjack.dto.participants.DealerDto;
+import blackjack.dto.participants.DealerCardDto;
 import blackjack.dto.participants.PlayerCardDto;
 import blackjack.dto.status.StatusDto;
 import blackjack.view.printer.Printer;
@@ -47,12 +47,12 @@ public class OutputView {
         printer.print(String.format(INITIAL_STATE_FORMAT, playerNames));
     }
 
-    private void printDealerFirstCard(DealerDto dealer) {
+    private void printDealerFirstCard(DealerCardDto dealer) {
         String cardText = cardView.toFirstCardView(dealer.getCards());
         printer.print(String.format(DEALER_CARD_FORMAT, cardText));
     }
 
-    private void printDealerCardsWithPoint(DealerDto dealer) {
+    private void printDealerCardsWithPoint(DealerCardDto dealer) {
         String cardText = cardView.toCardsView(dealer.getCards());
         printer.print(String.format(DEALER_CARD_WITH_POINT_FORMAT, cardText, dealer.getPoint()));
     }
