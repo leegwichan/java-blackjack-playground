@@ -13,8 +13,9 @@ import java.util.Objects;
 
 public class OutputView {
 
-    private static final String INITIAL_STATE_FORMAT = "%n딜러와 %s에게 2장의 카드를 나누었습니다.%n";
+    private static final String INITIAL_STATE_TITLE_FORMAT = "%n딜러와 %s에게 2장의 카드를 나누었습니다.%n";
     private static final String PROFIT_TITLE_FORMAT = "%n## 최종 수익%n";
+
     private static final String DEALER_CARD_FORMAT = "딜러 카드: %s%n";
     private static final String PLAYER_CARD_FORMAT = "%s 카드: %s%n";
     private static final String DEALER_CARD_WITH_POINT_FORMAT = "%n딜러 카드: %s - 결과 : %d%n";
@@ -33,26 +34,20 @@ public class OutputView {
     }
 
     public void printInitialParticipantsCards(CardStatusDto status) {
-        printInitialState(status.getPlayers());
+        printInitialStateTitle(status.getPlayers());
         printDealerFirstCard(status.getDealer());
         status.getPlayers().forEach(this::printPlayerCards);
     }
 
-    public void printFinalResult(CardStatusDto status) {
-        printDealerCardsWithPoint(status.getDealer());
-        status.getPlayers().forEach(this::printPlayerCardsWithPoint);
-    }
-
-    public void printFinalProfit(ProfitStatusDto profitStatus) {
-        printer.print(String.format(PROFIT_TITLE_FORMAT));
-
-        printDealerProfit(profitStatus.getDealerProfit());
-        profitStatus.getPlayersProfit().forEach(this::printPlayerProfit);
-    }
-
-    private void printInitialState(List<PlayerCardDto> playerCardDtos) {
+    private void printInitialStateTitle(List<PlayerCardDto> playerCardDtos) {
         String playerNames = getPlayerNames(playerCardDtos);
-        printer.print(String.format(INITIAL_STATE_FORMAT, playerNames));
+        printer.print(String.format(INITIAL_STATE_TITLE_FORMAT, playerNames));
+    }
+
+    private String getPlayerNames(List<PlayerCardDto> playerCardDtos) {
+        return playerCardDtos.stream()
+                .map(PlayerCardDto::getName)
+                .collect(joining(PLAYER_NAME_DELIMITER));
     }
 
     private void printDealerFirstCard(DealerCardDto dealer) {
@@ -60,19 +55,34 @@ public class OutputView {
         printer.print(String.format(DEALER_CARD_FORMAT, cardText));
     }
 
-    private void printDealerCardsWithPoint(DealerCardDto dealer) {
-        String cardText = cardView.toCardsView(dealer.getCards());
-        printer.print(String.format(DEALER_CARD_WITH_POINT_FORMAT, cardText, dealer.getPoint()));
-    }
-
     public void printPlayerCards(PlayerCardDto player) {
         String cardText = cardView.toCardsView(player.getCards());
         printer.print(String.format(PLAYER_CARD_FORMAT, player.getName(), cardText));
     }
 
+    public void printFinalResult(CardStatusDto status) {
+        printDealerCardsWithPoint(status.getDealer());
+        status.getPlayers().forEach(this::printPlayerCardsWithPoint);
+    }
+
+    private void printDealerCardsWithPoint(DealerCardDto dealer) {
+        String cardText = cardView.toCardsView(dealer.getCards());
+        printer.print(String.format(DEALER_CARD_WITH_POINT_FORMAT, cardText, dealer.getPoint()));
+    }
+
     private void printPlayerCardsWithPoint(PlayerCardDto player) {
         String cardText = cardView.toCardsView(player.getCards());
         printer.print(String.format(PLAYER_CARD_WITH_POINT_FORMAT, player.getName(), cardText, player.getPoint()));
+    }
+
+    public void printFinalProfit(ProfitStatusDto profitStatus) {
+        printFinalProfitTitle();
+        printDealerProfit(profitStatus.getDealerProfit());
+        profitStatus.getPlayersProfit().forEach(this::printPlayerProfit);
+    }
+
+    private void printFinalProfitTitle() {
+        printer.print(String.format(PROFIT_TITLE_FORMAT));
     }
 
     private void printDealerProfit(int profit) {
@@ -81,11 +91,5 @@ public class OutputView {
 
     private void printPlayerProfit(PlayerProfitDto playerDto) {
         printer.print(String.format(PLAYER_PROFIT_FORMAT, playerDto.getName(), playerDto.getProfit()));
-    }
-
-    private String getPlayerNames(List<PlayerCardDto> playerCardDtos) {
-        return playerCardDtos.stream()
-                .map(PlayerCardDto::getName)
-                .collect(joining(PLAYER_NAME_DELIMITER));
     }
 }
