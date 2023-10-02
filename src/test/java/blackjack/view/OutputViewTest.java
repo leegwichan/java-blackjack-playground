@@ -8,7 +8,9 @@ import blackjack.dto.card.CardDto;
 import blackjack.dto.card.CardsDto;
 import blackjack.dto.participants.DealerCardDto;
 import blackjack.dto.participants.PlayerCardDto;
+import blackjack.dto.participants.PlayerProfitDto;
 import blackjack.dto.status.CardStatusDto;
+import blackjack.dto.status.ProfitStatusDto;
 import blackjack.view.printer.MockPrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -68,6 +70,23 @@ class OutputViewTest {
                 + "jason 카드: " + MockCardView.createMockView(2) + " - 결과 : 20" + NEW_LINE;
 
         outputView.printFinalResult(cardStatusDto);
+
+        assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
+    }
+
+    @Test
+    @DisplayName("딜러, 플레이어들의 최종 수익을 출력할 수 있다")
+    void printFinalProfitTest() {
+        PlayerProfitDto pobiProfit = PlayerProfitDto.of("pobi", 1500);
+        PlayerProfitDto jasonProfit = PlayerProfitDto.of("jason", -2500);
+        int dealerProfit = 1000;
+        ProfitStatusDto profitStatus = ProfitStatusDto.of(List.of(pobiProfit, jasonProfit), dealerProfit);
+        String expectedPrintedMessage = NEW_LINE + "## 최종 수익" + NEW_LINE
+                + "딜러 : 1000" + NEW_LINE
+                + "pobi : 1500" + NEW_LINE
+                + "jason : -2500" + NEW_LINE;
+
+        outputView.printFinalProfit(profitStatus);
 
         assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
     }
