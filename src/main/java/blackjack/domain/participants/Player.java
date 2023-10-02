@@ -25,8 +25,4 @@ public final class Player extends Participant {
     public String getName() {
         return name;
     }
-
-    public int getBetAmount() {
-        return betAmount;
-    }
 }

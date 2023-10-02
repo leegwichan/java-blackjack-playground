@@ -7,7 +7,7 @@ import blackjack.domain.card.CardShape;
 import blackjack.dto.card.CardDto;
 import blackjack.dto.card.CardsDto;
 import blackjack.dto.participants.DealerDto;
-import blackjack.dto.participants.PlayerDto;
+import blackjack.dto.participants.PlayerCardDto;
 import blackjack.dto.status.StatusDto;
 import blackjack.view.printer.MockPrinter;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,10 +27,8 @@ class OutputViewTest {
     private final CardDto SPADE_K = CardDto.of(CardShape.SPADE, CardLetter.KING);
 
     private final DealerDto DEALER_DTO = DealerDto.of(19, CardsDto.of(List.of(CLOVER_7, SPADE_K)));
-    private final PlayerDto POBI_DTO = PlayerDto.of("pobi", 1000, 15,
-            CardsDto.of(List.of(DIAMOND_3, DIAMOND_4)));
-    private final PlayerDto JASON_DTO = PlayerDto.of("jason", 2000, 20,
-            CardsDto.of(List.of(HEART_2, SPADE_8)));
+    private final PlayerCardDto POBI_DTO = PlayerCardDto.of("pobi", 15, CardsDto.of(List.of(DIAMOND_3, DIAMOND_4)));
+    private final PlayerCardDto JASON_DTO = PlayerCardDto.of("jason", 20, CardsDto.of(List.of(HEART_2, SPADE_8)));
 
     private MockPrinter printer;
     private MockCardView mockCardView;

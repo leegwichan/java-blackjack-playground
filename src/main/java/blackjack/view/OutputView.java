@@ -3,7 +3,7 @@ package blackjack.view;
 import static java.util.stream.Collectors.joining;
 
 import blackjack.dto.participants.DealerDto;
-import blackjack.dto.participants.PlayerDto;
+import blackjack.dto.participants.PlayerCardDto;
 import blackjack.dto.status.StatusDto;
 import blackjack.view.printer.Printer;
 import java.util.List;
@@ -42,8 +42,8 @@ public class OutputView {
 
     }
 
-    private void printInitialState(List<PlayerDto> playerDtos) {
-        String playerNames = getPlayerNames(playerDtos);
+    private void printInitialState(List<PlayerCardDto> playerCardDtos) {
+        String playerNames = getPlayerNames(playerCardDtos);
         printer.print(String.format(INITIAL_STATE_FORMAT, playerNames));
     }
 
@@ -57,19 +57,19 @@ public class OutputView {
         printer.print(String.format(DEALER_CARD_WITH_POINT_FORMAT, cardText, dealer.getPoint()));
     }
 
-    public void printPlayerCards(PlayerDto player) {
+    public void printPlayerCards(PlayerCardDto player) {
         String cardText = cardView.toCardsView(player.getCards());
         printer.print(String.format(PLAYER_CARD_FORMAT, player.getName(), cardText));
     }
 
-    private void printPlayerCardsWithPoint(PlayerDto player) {
+    private void printPlayerCardsWithPoint(PlayerCardDto player) {
         String cardText = cardView.toCardsView(player.getCards());
         printer.print(String.format(PLAYER_CARD_WITH_POINT_FORMAT, player.getName(), cardText, player.getPoint()));
     }
 
-    private String getPlayerNames(List<PlayerDto> playerDtos) {
-        return playerDtos.stream()
-                .map(PlayerDto::getName)
+    private String getPlayerNames(List<PlayerCardDto> playerCardDtos) {
+        return playerCardDtos.stream()
+                .map(PlayerCardDto::getName)
                 .collect(joining(PLAYER_NAME_DELIMITER));
     }
 }
