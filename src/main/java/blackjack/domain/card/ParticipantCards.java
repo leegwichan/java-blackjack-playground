@@ -12,16 +12,19 @@ public class ParticipantCards {
     private final List<Card> cards;
 
     public ParticipantCards(List<Card> cards) {
-        if (cards == null || cards.isEmpty()) {
-            throw new IllegalArgumentException("최소 한 장의 카드는 가지고 있어야 합니다");
-        }
-
+        validateCardIsNotEmpty(cards);
         this.cards = new ArrayList<>(cards);
     }
 
+    private void validateCardIsNotEmpty(List<Card> cards) {
+        if (cards == null || cards.isEmpty()) {
+            throw new IllegalArgumentException("최소 한 장의 카드는 가지고 있어야 합니다");
+        }
+    }
+
     public int calculatePoint() {
-        int point =  sumOfCardsNumber();
-        if (point + ACE_BONUS_POINT <= UPPER_LIMIT_POINT && isAceExist()) {
+        int point = sumOfCardsNumber();
+        if (isAceBonusCanAdded(point)) {
             point += ACE_BONUS_POINT;
         }
 
@@ -30,6 +33,14 @@ public class ParticipantCards {
 
     private int sumOfCardsNumber() {
         return cards.stream().mapToInt(Card::getNumber).sum();
+    }
+
+    private boolean isAceBonusCanAdded(int point) {
+        return isNotBustWhenAddAceBonusPoint(point) && isAceExist();
+    }
+
+    private boolean isNotBustWhenAddAceBonusPoint(int point) {
+        return point + ACE_BONUS_POINT <= UPPER_LIMIT_POINT;
     }
 
     private boolean isAceExist() {
