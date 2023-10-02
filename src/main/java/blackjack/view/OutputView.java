@@ -4,7 +4,7 @@ import static java.util.stream.Collectors.joining;
 
 import blackjack.dto.participants.DealerCardDto;
 import blackjack.dto.participants.PlayerCardDto;
-import blackjack.dto.status.StatusDto;
+import blackjack.dto.status.CardStatusDto;
 import blackjack.view.printer.Printer;
 import java.util.List;
 import java.util.Objects;
@@ -27,13 +27,13 @@ public class OutputView {
         this.printer = Objects.requireNonNull(printer);
     }
 
-    public void printInitialParticipantsCards(StatusDto status) {
+    public void printInitialParticipantsCards(CardStatusDto status) {
         printInitialState(status.getPlayers());
         printDealerFirstCard(status.getDealer());
         status.getPlayers().forEach(this::printPlayerCards);
     }
 
-    public void printFinalResult(StatusDto status) {
+    public void printFinalResult(CardStatusDto status) {
         printDealerCardsWithPoint(status.getDealer());
         status.getPlayers().forEach(this::printPlayerCardsWithPoint);
     }

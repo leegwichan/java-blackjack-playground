@@ -8,7 +8,7 @@ import blackjack.dto.card.CardDto;
 import blackjack.dto.card.CardsDto;
 import blackjack.dto.participants.DealerCardDto;
 import blackjack.dto.participants.PlayerCardDto;
-import blackjack.dto.status.StatusDto;
+import blackjack.dto.status.CardStatusDto;
 import blackjack.view.printer.MockPrinter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,13 +37,13 @@ class OutputViewTest {
     @Test
     @DisplayName("초기 딜러와 플레이어들의 카드 상황을 출력할 수 있다")
     void printInitialParticipantsCardsTest() {
-        StatusDto statusDto = StatusDto.of(DEALER_DTO, List.of(POBI_DTO, JASON_DTO));
+        CardStatusDto cardStatusDto = CardStatusDto.of(DEALER_DTO, List.of(POBI_DTO, JASON_DTO));
         String expectedPrintedMessage = NEW_LINE + "딜러와 pobi, jason에게 2장의 카드를 나누었습니다." + NEW_LINE
                 + "딜러 카드: " + MockCardView.createMockView(1) + NEW_LINE
                 + "pobi 카드: " + MockCardView.createMockView(2) + NEW_LINE
                 + "jason 카드: " + MockCardView.createMockView(2) + NEW_LINE;
 
-        outputView.printInitialParticipantsCards(statusDto);
+        outputView.printInitialParticipantsCards(cardStatusDto);
 
         assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
     }
@@ -61,13 +61,13 @@ class OutputViewTest {
     @Test
     @DisplayName("초기 딜러와 플레이어들의 카드 상황과 점수를 출력할 수 있다")
     void printFinalResultTest() {
-        StatusDto statusDto = StatusDto.of(DEALER_DTO, List.of(POBI_DTO, JASON_DTO));
+        CardStatusDto cardStatusDto = CardStatusDto.of(DEALER_DTO, List.of(POBI_DTO, JASON_DTO));
         String expectedPrintedMessage = NEW_LINE
                 + "딜러 카드: " + MockCardView.createMockView(2) + " - 결과 : 19" + NEW_LINE
                 + "pobi 카드: " + MockCardView.createMockView(2) + " - 결과 : 15" + NEW_LINE
                 + "jason 카드: " + MockCardView.createMockView(2) + " - 결과 : 20" + NEW_LINE;
 
-        outputView.printFinalResult(statusDto);
+        outputView.printFinalResult(cardStatusDto);
 
         assertThat(printer.getPrintedMessage()).isEqualTo(expectedPrintedMessage);
     }
